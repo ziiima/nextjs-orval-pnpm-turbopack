@@ -2,12 +2,13 @@ services:
   monorepo_container:
     container_name: monorepo_container
     build:
-      context: ..
-      dockerfile: ./local-dev/node.dockerfile
+      context: ../application
+      dockerfile: dockerfile
       args:
         - NODE_VERSION=22.1
-      target: base
-    tty: true
+      target: dev-runner
     restart: on-failure
     volumes:
-      - "..:/app"
+      - "../application:/app"
+    ports:
+      - "3000:3000"
