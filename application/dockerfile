@@ -1,8 +1,12 @@
 ARG NODE_VERSION
 
 FROM node:${NODE_VERSION}-slim as base
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-COPY . /app
-WORKDIR /app
+    ENV PNPM_HOME="/pnpm"
+    ENV PATH="$PNPM_HOME:$PATH"
+    RUN corepack enable
+    WORKDIR /app
+    COPY . /app
+
+FROM base AS dev-runner
+    RUN pnpm install
+    CMD ["pnpm", "run", "dev"]
